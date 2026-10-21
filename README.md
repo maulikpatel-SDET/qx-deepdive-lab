@@ -1,4 +1,4 @@
-# qx-deepdive-lab  (Round 8)
+# qx-deepdive-lab
 
 Only the languages Qryptive supports: Python (.py), Java (.java), Go (.go),
 JavaScript / TypeScript (.js .jsx .ts .tsx .mjs .cjs).
