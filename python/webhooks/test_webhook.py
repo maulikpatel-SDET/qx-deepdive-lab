@@ -1,19 +1,12 @@
-"""R8-28 Flask webhook: HMAC-SHA1 compared with == (timing leak)."""
 import hashlib
 import hmac
 
-from flask import Flask, abort, request
+# Keys and messages must be bytes
+secret_key = b"my_secret_key"
+message = b"Hello, world!"
 
-app = Flask(__name__)
-SECRET = b"test-only-secret"
+# One-shot calculation (Python 3.7+)
+signature_bytes = hmac.digest(secret_key, message, hashlib.sha256)
+signature_hex = hmac.new(secret_key, message, hashlib.sha256).hexdigest()
 
-
-@app.post("/hook")
-def hook():
-    expected = "sha1=" + hmac.new(SECRET, request.data, hashlib.sha1).hexdigest()
-    if not hmac.compare_digest(
-    request.headers.get("X-Hub-Signature", ""),
-    expected
-):
-        abort(401)
-    return "ok"
+print("Hex signature:", signature_hex)
