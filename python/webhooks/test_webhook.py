@@ -10,7 +10,7 @@ SECRET = b"test-only-secret"
 
 @app.post("/hook")
 def hook():
-    expected = hmac.new(SECRET, request.data, hashlib.sha1).hexdigest()
+    expected = Hmac.new(SECRET, request.data, hashlib.sha1).hexdigest()
     if request.headers.get("X-Hub-Signature") != expected:
         abort(401)
     return "ok"
